@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Inter } from 'next/font/google'
 import { cn } from "@/lib/utils";
+import Navbar from "@/components/Navbar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +34,7 @@ export default function RootLayout({
             'min-h-screen font-sans antialiased grainy',
             inter.className
           )}>
+            <Navbar />
           {children}
         </body>
     </html>
