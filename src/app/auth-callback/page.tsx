@@ -10,21 +10,37 @@ const Page = () => {
     const origin = searchParams.get('origin');
 
 
-    trpc.authCallback.useQuery(undefined, {
-        onSuccess: ({ success }) => {
-          if (success) {
-            // user is synced to db
-            router.push(origin ? `/${origin}` : '/dashboard')
-          }
-        },
-        onError: (err) => {
-          if (err.data?.code === 'UNAUTHORIZED') {
-            router.push('/sign-in')
-          }
-        },
-        retry: true,
-        retryDelay: 500,
-      })
+    // trpc.authCallback.useQuery(undefined, {
+    //     onSuccess: ({ success }) => {
+    //       if (success) {
+    //         // user is synced to db
+    //         router.push(origin ? `/${origin}` : '/dashboard')
+    //       }
+    //     },
+    //     onError: (err) => {
+    //       if (err.data?.code === 'UNAUTHORIZED') {
+    //         router.push('/sign-in')
+    //       }
+    //     },
+    //     retry: true,
+    //     retryDelay: 500,
+    //   })
+
+
+    const { data, error, isLoading } = trpc.authCallback.useQuery(undefined, {
+      retry: true,          // Retry on failure
+      retryDelay: 500,      // Delay between retries (in ms)
+    });
+  
+    // if (isLoading) return <p>Loading...</p>;
+  
+    if (error?.data?.code === 'UNAUTHORIZED') {
+      router.push('/sign-in');
+    }
+  
+    if (data?.success) {
+      router.push(origin ? `/${origin}` : '/dashboard');
+    }
     return (
         <div className='w-full mt-24 flex justify-center'>
         <div className='flex flex-col items-center gap-2'>
