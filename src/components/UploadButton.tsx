@@ -6,10 +6,14 @@ import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import Dropzone from "react-dropzone";
 import { Cloud, File } from "lucide-react";
 import { Progress } from "./ui/progress";
+import { useUploadThing } from "@/lib/uploadthing";
 
 const UploadDropzone = () => {
   const [isUploading, setIsUploading] = useState<boolean>(true);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
+
+  const { startUpload } = useUploadThing("pdfUploader");
+  
   const startSimulatedProgress = () => {
     setUploadProgress(0);
 
@@ -66,7 +70,10 @@ const UploadDropzone = () => {
                   </div>
                 </div>
               ) : null}
-              <Progress value={uploadProgress} className="h-1 w-full bg-zinc-200" />
+              <Progress
+                value={uploadProgress}
+                className="h-1 w-full bg-zinc-200"
+              />
               {isUploading ? (
                 <div className="w-full mt-4 max-w-xs mx-auto"></div>
               ) : null}
