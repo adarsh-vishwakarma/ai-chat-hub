@@ -19,7 +19,7 @@ const Sidebar = () => {
   const GetFileInfo = useQuery(api.user.GetUserInfo, {
     userEmail:user?.primaryEmailAddress?.emailAddress
   })
-  console.log(GetFileInfo[0].upgrade)
+  console.log(GetFileInfo?.[0]?.upgrade)
   const fileList = useQuery(api.fileStorge.GetUserFiles, {
     userEmail: user?.primaryEmailAddress?.emailAddress,
   });
@@ -31,7 +31,7 @@ const Sidebar = () => {
         FEATURES <SquarePen className="h-3 w-3" />
       </div>
       <div>
-        <UploadPdfDialog isMaxFile={(fileList?.length >= 5 && !GetFileInfo[0].upgrade)? true : false}>
+        <UploadPdfDialog isMaxFile={(fileList?.length >= 5 && !GetFileInfo?.[0]?.upgrade)? true : false}>
           <Button className="w-full cursor-pointer">+ Upload PDF</Button>
         </UploadPdfDialog>
 
