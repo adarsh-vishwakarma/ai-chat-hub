@@ -1,4 +1,6 @@
-"use client";
+'use client'
+export const dynamic = 'force-dynamic';
+
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useQueries, useQuery } from "convex/react";

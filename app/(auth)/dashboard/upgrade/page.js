@@ -1,4 +1,6 @@
-"use client";
+'use client'
+export const dynamic = 'force-dynamic';
+
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { PayPalButtons } from "@paypal/react-paypal-js";
@@ -10,21 +12,12 @@ function UpgardePlans() {
   const upgradeUserPlan = useMutation(api.user.userUpgradePlan);
   const { user } = useUser();
   const OnPaymentSuccess = async () => {
-    const email = user?.primaryEmailAddress?.emailAddress;
-  
-    if (!email) {
-      toast("User email not found");
-      return;
-    }
-  
     const result = await upgradeUserPlan({
-      userEmail: email,
+      userEmail: user?.primaryEmailAddress?.emailAddress,
     });
-  
     console.log(result);
     toast("Plan upgraded successfully");
   };
-  
   return (
     <div>
       <h2 className="font-medium text-3xl">Plans</h2>

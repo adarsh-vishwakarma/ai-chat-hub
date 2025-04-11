@@ -1,4 +1,6 @@
-"use client";
+'use client'
+export const dynamic = 'force-dynamic';
+
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Layout, Shield, SquarePen } from "lucide-react";
