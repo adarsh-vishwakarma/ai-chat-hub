@@ -19,7 +19,7 @@ function UpgardePlans() {
     toast("Plan upgraded successfully");
   };
   return (
-    <div>
+    <div className="p-5">
       <h2 className="font-medium text-3xl">Plans</h2>
       <p>Upgarde your plan to upload multiple pdf to take notes</p>
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">

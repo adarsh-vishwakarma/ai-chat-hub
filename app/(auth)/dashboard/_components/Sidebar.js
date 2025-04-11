@@ -1,9 +1,22 @@
-'use client'
-export const dynamic = 'force-dynamic';
+"use client";
+export const dynamic = "force-dynamic";
 
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Layout, Shield, SquarePen } from "lucide-react";
+import {
+  Layout,
+  Shield,
+  SquarePen,
+  Home,
+  Wallet,
+  Repeat,
+  BarChart,
+  Settings,
+  Gift,
+  HelpCircle,
+  TrendingUp,
+  LineChart,
+} from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import UploadPdfDialog from "./UploadPdfDialog";
@@ -17,48 +30,98 @@ const Sidebar = () => {
   const { user } = useUser();
   const path = usePathname();
   const GetFileInfo = useQuery(api.user.GetUserInfo, {
-    userEmail:user?.primaryEmailAddress?.emailAddress
-  })
-  console.log(GetFileInfo?.[0]?.upgrade)
+    userEmail: user?.primaryEmailAddress?.emailAddress,
+  });
   const fileList = useQuery(api.fileStorge.GetUserFiles, {
     userEmail: user?.primaryEmailAddress?.emailAddress,
   });
-  console.log(fileList);
-  return (
-    <div className="shadow-sm h-screen p-7">
-      <Image src={"/logo.png"} alt="logo" width={120} height={120} />
-      <div className="flex items-center gap-4 text-[12px]">
-        FEATURES <SquarePen className="h-3 w-3" />
-      </div>
-      <div>
-        <UploadPdfDialog isMaxFile={(fileList?.length >= 5 && !GetFileInfo?.[0]?.upgrade)? true : false}>
-          <Button className="w-full cursor-pointer">+ Upload PDF</Button>
-        </UploadPdfDialog>
 
-        <Link href={'/dashboard'}>
-        <div
-          className={`flex  gap-2 items-center p-3 mt-5 hover:bg-slate-100 rounded-lg cursor-pointer ${path == "/dashboard" && "bg-slate-200"}`}
+  //     
+  //       <Link href="/dashboard/upgrade">
+  //         <div
+  //           className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+  //             path === "/dashboard/upgrade" ? "bg-blue-100 text-blue-600" : "hover:bg-gray-100 text-gray-700"
+  //           }`}
+  //         >
+  //           <Shield className="w-5 h-5" />
+  //           <span className="text-sm font-medium">Upgrade</span>
+  //         </div>
+  //       </Link>
+
+  return (
+    <aside className="bg-black text-white h-screen w-64 p-6 flex flex-col justify-between border-r border-white/10">
+      {/* Top Brand */}
+      <div>
+        <h1 className="text-xl font-bold text-white mb-10 flex items-center gap-2">
+          <span className="w-3 h-3 bg-orange-500 rounded-full" /> Cryptolink
+        </h1>
+        <UploadPdfDialog
+          isMaxFile={
+            fileList?.length >= 5 && !GetFileInfo?.[0]?.upgrade ? true : false
+          }
         >
-          <Layout />
-          <h2>Workspace</h2>
+          <Button className="w-full mb-6 hover:cursor-pointer">+ Upload PDF</Button>
+        </UploadPdfDialog>
+        {/* Main Section */}
+        <div className="mt-5">
+          <h2 className="text-xs text-gray-500 mb-2">MAIN</h2>
+          <nav className="flex flex-col gap-1 text-sm">
+            <Link href="/dashboard">
+              <SidebarItem icon={<Home size={18} />} label="Dashboard" active={path === "/dashboard"} />
+            </Link>
+            <Link href="/dashboard/upgrade">
+
+            <SidebarItem icon={<Wallet size={18} />} label="Wallet" active={path === "/dashboard/upgrade"}/>
+            </Link>
+            <SidebarItem icon={<Repeat size={18} />} label="Transactions" />
+
+            <SidebarItem
+              icon={<LineChart size={18} />}
+              label="Markets"
+              badge="NEW"
+            />
+          </nav>
         </div>
-        </Link>
-        <Link href={'/dashboard/upgrade'}>
-        <div
-          className={`flex  gap-2 items-center p-3 mt-1 hover:bg-slate-100 rounded-lg cursor-pointer ${path == "/dashboard/upgrade" && "bg-slate-200"}`}
-        >
-          <Shield />
-          <h2>Upgrade</h2>
+
+        {/* Other Section */}
+        <div className="mt-6">
+          <h2 className="text-xs text-gray-500 mb-2">OTHER</h2>
+          <nav className="flex flex-col gap-1 text-sm">
+            <SidebarItem icon={<Settings size={18} />} label="Settings" />
+            <SidebarItem icon={<Gift size={18} />} label="Rewards" />
+            <SidebarItem icon={<HelpCircle size={18} />} label="Support" />
+          </nav>
         </div>
-        </Link>
       </div>
-      <div className="absolute bottom-20 w-[80%]">
-        <Progress value={(fileList?.length / 5) * 100} />
-        <p className="text-sm mt-1">{fileList?.length} out of 5 pdf Uploaded</p>
-        <p className="text-sm text-gray-400 mt-2">Upgrade to Upload more PDF</p>
+      {/* Progress Info */}
+      <div className="w-full mb-10">
+        <Progress
+          value={(fileList?.length / 5) * 100}
+          className="mb-2 bg-white"
+        />
+        <p className="text-sm font-medium">
+          {fileList?.length || 0} out of 5 PDFs Uploaded
+        </p>
+        <p className="text-xs text-gray-400 mt-1">
+          Upgrade to upload more PDFs
+        </p>
       </div>
-    </div>
+    </aside>
   );
 };
 
+const SidebarItem = ({ icon, label, badge, active }) => (
+  <div
+    className={`flex items-center justify-between px-3 py-2 rounded-md cursor-pointer 
+      ${active ? "bg-white/10 text-white" : "text-gray-400 hover:bg-white/5 hover:text-white"}`}
+  >
+    <div className="flex items-center gap-3">
+      {icon}
+      <span>{label}</span>
+    </div>
+    {badge && (
+      <span className="text-orange-500 text-xs font-semibold">{badge}</span>
+    )}
+  </div>
+);
 export default Sidebar;
