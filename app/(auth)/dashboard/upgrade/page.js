@@ -10,12 +10,21 @@ function UpgardePlans() {
   const upgradeUserPlan = useMutation(api.user.userUpgradePlan);
   const { user } = useUser();
   const OnPaymentSuccess = async () => {
+    const email = user?.primaryEmailAddress?.emailAddress;
+  
+    if (!email) {
+      toast("User email not found");
+      return;
+    }
+  
     const result = await upgradeUserPlan({
-      userEmail: user?.primaryEmailAddress?.emailAddress,
+      userEmail: email,
     });
+  
     console.log(result);
     toast("Plan upgraded successfully");
   };
+  
   return (
     <div>
       <h2 className="font-medium text-3xl">Plans</h2>
