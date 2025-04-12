@@ -4,7 +4,9 @@ import { buttonVariants } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { useMutation } from "convex/react";
-import { ArrowRight,  Bot,
+import {
+  ArrowRight,
+  Bot,
   FileText,
   Youtube,
   Brain,
@@ -17,7 +19,8 @@ import { ArrowRight,  Bot,
   Upload,
   MessageSquare,
   Download,
-  CheckCircle2, } from "lucide-react";
+  CheckCircle2,
+} from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -48,27 +51,39 @@ export default function Home() {
               </span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <a
+              <Link
                 href="#"
                 className="text-gray-300 hover:text-white transition-colors"
               >
                 Features
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="text-gray-300 hover:text-white transition-colors"
               >
                 How it works
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="text-gray-300 hover:text-white transition-colors"
               >
                 Pricing
-              </a>
-              <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-full hover:opacity-90 transition-opacity">
-                Try for Free
-              </button>
+              </Link>
+              {user ? (
+                <Link
+                  href="/dashboard"
+                  className="bg-gradient-to-r from-purple-600 to-pink-500 text-white px-6 py-2 rounded-full hover:opacity-90 transition-opacity shadow-md"
+                >
+                  Go to Dashboard
+                </Link>
+              ) : (
+                <Link
+                  href="/sign-in"
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-full hover:opacity-90 transition-opacity shadow-md"
+                >
+                  Try for Free
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -88,12 +103,15 @@ export default function Home() {
               videos, and experience next-gen AI conversations.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
-              <button className="group relative px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 transition-opacity">
+              <Link
+                href={user ? "/dashboard" : "/sign-in"}
+                className="group relative px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 transition-opacity"
+              >
                 <span className="flex items-center justify-center">
                   <Sparkles className="h-5 w-5 mr-2" />
                   Get Started
                 </span>
-              </button>
+              </Link>
               <button className="px-8 py-4 rounded-full border border-purple-500/30 hover:bg-purple-500/10 transition-colors">
                 <span className="flex items-center justify-center">
                   <Brain className="h-5 w-5 mr-2" />
@@ -176,8 +194,8 @@ export default function Home() {
         </div>
       </section>
 
- {/* How It Works */}
- <section className="py-20 relative">
+      {/* How It Works */}
+      <section className="py-20 relative">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             How It Works
@@ -187,25 +205,28 @@ export default function Home() {
               {
                 icon: <Upload className="h-8 w-8 text-purple-400" />,
                 title: "Upload Content",
-                description: "Upload your PDFs or paste YouTube links"
+                description: "Upload your PDFs or paste YouTube links",
               },
               {
                 icon: <Brain className="h-8 w-8 text-purple-400" />,
                 title: "AI Processing",
-                description: "Our AI analyzes and processes your content"
+                description: "Our AI analyzes and processes your content",
               },
               {
                 icon: <MessageSquare className="h-8 w-8 text-purple-400" />,
                 title: "Interactive Chat",
-                description: "Ask questions and get instant answers"
+                description: "Ask questions and get instant answers",
               },
               {
                 icon: <Download className="h-8 w-8 text-purple-400" />,
                 title: "Export Results",
-                description: "Download summaries and insights"
-              }
+                description: "Download summaries and insights",
+              },
             ].map((step, index) => (
-              <div key={index} className="relative p-6 bg-gradient-to-br from-purple-900/30 to-transparent rounded-2xl border border-purple-500/20">
+              <div
+                key={index}
+                className="relative p-6 bg-gradient-to-br from-purple-900/30 to-transparent rounded-2xl border border-purple-500/20"
+              >
                 <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                   {index + 1}
                 </div>
@@ -244,8 +265,8 @@ export default function Home() {
         </div>
       </section>
 
-  {/* Pricing Section */}
-  <section className="py-20 relative">
+      {/* Pricing Section */}
+      <section className="py-20 relative">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Choose Your Plan
@@ -259,8 +280,8 @@ export default function Home() {
                   "5 PDF uploads per month",
                   "3 YouTube video summaries",
                   "Basic AI chat",
-                  "Email support"
-                ]
+                  "Email support",
+                ],
               },
               {
                 name: "Pro",
@@ -271,8 +292,8 @@ export default function Home() {
                   "Unlimited video summaries",
                   "Advanced AI chat",
                   "Priority support",
-                  "Custom API access"
-                ]
+                  "Custom API access",
+                ],
               },
               {
                 name: "Enterprise",
@@ -282,15 +303,18 @@ export default function Home() {
                   "Custom integrations",
                   "Dedicated account manager",
                   "SLA guarantee",
-                  "Custom AI training"
-                ]
-              }
+                  "Custom AI training",
+                ],
+              },
             ].map((plan, index) => (
-              <div key={index} className={`relative p-8 rounded-2xl border ${
-                plan.popular 
-                  ? 'border-purple-500 bg-gradient-to-br from-purple-900/50 to-transparent' 
-                  : 'border-purple-500/20 bg-gradient-to-br from-purple-900/30 to-transparent'
-              }`}>
+              <div
+                key={index}
+                className={`relative p-8 rounded-2xl border ${
+                  plan.popular
+                    ? "border-purple-500 bg-gradient-to-br from-purple-900/50 to-transparent"
+                    : "border-purple-500/20 bg-gradient-to-br from-purple-900/30 to-transparent"
+                }`}
+              >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-1 rounded-full text-sm">
                     Most Popular
@@ -299,7 +323,9 @@ export default function Home() {
                 <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
                 <div className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                   {plan.price}
-                  {plan.price !== "Custom" && <span className="text-lg text-gray-400">/mo</span>}
+                  {plan.price !== "Custom" && (
+                    <span className="text-lg text-gray-400">/mo</span>
+                  )}
                 </div>
                 <ul className="space-y-4 mb-8">
                   {plan.features.map((feature, i) => (
@@ -309,11 +335,13 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <button className={`w-full py-3 rounded-full ${
-                  plan.popular
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-500'
-                    : 'border border-purple-500/30 hover:bg-purple-500/10'
-                } transition-all`}>
+                <button
+                  className={`w-full py-3 rounded-full ${
+                    plan.popular
+                      ? "bg-gradient-to-r from-purple-500 to-pink-500"
+                      : "border border-purple-500/30 hover:bg-purple-500/10"
+                  } transition-all`}
+                >
                   Get Started
                 </button>
               </div>
@@ -410,33 +438,42 @@ export default function Home() {
         </div>
       </section>
       {/* Footer */}
-<footer className="bg-black border-t border-white/10 py-12 mt-20">
-  <div className="container mx-auto px-6">
-    <div className="flex flex-col md:flex-row justify-between items-center text-gray-400">
-      {/* Logo and Tagline */}
-      <div className="flex items-center mb-6 md:mb-0">
-        <Bot className="h-6 w-6 text-purple-500" />
-        <span className="ml-2 text-lg font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-          AI Chat Hub
-        </span>
-      </div>
+      <footer className="bg-black border-t border-white/10 py-12 mt-20">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center text-gray-400">
+            {/* Logo and Tagline */}
+            <div className="flex items-center mb-6 md:mb-0">
+              <Bot className="h-6 w-6 text-purple-500" />
+              <span className="ml-2 text-lg font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+                AI Chat Hub
+              </span>
+            </div>
 
-      {/* Footer Links */}
-      <div className="flex flex-wrap justify-center md:justify-end gap-6 text-sm">
-        <a href="#" className="hover:text-white transition-colors">Features</a>
-        <a href="#" className="hover:text-white transition-colors">Pricing</a>
-        <a href="#" className="hover:text-white transition-colors">How It Works</a>
-        <a href="#" className="hover:text-white transition-colors">Contact</a>
-        <a href="#" className="hover:text-white transition-colors">Privacy</a>
-      </div>
-    </div>
+            {/* Footer Links */}
+            <div className="flex flex-wrap justify-center md:justify-end gap-6 text-sm">
+              <a href="#" className="hover:text-white transition-colors">
+                Features
+              </a>
+              <a href="#" className="hover:text-white transition-colors">
+                Pricing
+              </a>
+              <a href="#" className="hover:text-white transition-colors">
+                How It Works
+              </a>
+              <a href="#" className="hover:text-white transition-colors">
+                Contact
+              </a>
+              <a href="#" className="hover:text-white transition-colors">
+                Privacy
+              </a>
+            </div>
+          </div>
 
-    <div className="mt-8 text-center text-xs text-gray-500">
-      &copy; {new Date().getFullYear()} AI Chat Hub. All rights reserved.
-    </div>
-  </div>
-</footer>
-
+          <div className="mt-8 text-center text-xs text-gray-500">
+            &copy; {new Date().getFullYear()} AI Chat Hub. All rights reserved.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

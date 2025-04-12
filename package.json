@@ -35,11 +35,13 @@
     "pdf-parse": "^1.1.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-markdown": "^10.1.0",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.2.0",
     "tailwind-scrollbar-hide": "^2.0.0",
     "tw-animate-css": "^1.2.5",
-    "uuid4": "^2.0.3"
+    "uuid4": "^2.0.3",
+    "youtube-transcript": "^1.2.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
