@@ -3,34 +3,31 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { YoutubeTranscript } from "youtube-transcript";
 
 async function getData(concatenatedText) {
+  try {
+    const apiKey = process.env.GOOGLE_GENAI_API_KEY;
+    if (!apiKey) throw new Error("Missing GOOGLE_GENAI_API_KEY");
 
-const apiKey = process.env.GOOGLE_GENAI_API_KEY;
-  const genAI = new GoogleGenerativeAI(apiKey);
+    const genAI = new GoogleGenerativeAI(apiKey);
 
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
-  });
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
+    });
 
-  const generationConfig = {
-    temperature: 1,
-    topP: 0.95,
-    topK: 40,
-    maxOutputTokens: 8192,
-    responseMimeType: "text/plain",
-  };
+    const generationConfig = {
+      temperature: 1,
+      topP: 0.95,
+      topK: 40,
+      maxOutputTokens: 8192,
+      responseMimeType: "text/plain",
+    };
 
-  const chatSession = model.startChat({
-    generationConfig,
-    history: [],
-  });
+    const chatSession = model.startChat({
+      generationConfig,
+      history: [],
+    });
 
-  const result = await chatSession.sendMessage(
-    // "take this input and generate a more detailed notes for exam preparetion including all the necessary toics, heading, subheadings, key pointt and defferences and all the content" +
-    //   concatenatedText
-
-
-
-    `You are an AI assistant specialized in converting raw text or transcripts into clear, structured study notes. I will provide you with a block of text (such as a YouTube transcript or lecture notes). Your job is to:
+    const result = await chatSession.sendMessage(
+      `You are an AI assistant specialized in converting raw text or transcripts into clear, structured study notes. I will provide you with a block of text (such as a YouTube transcript or lecture notes). Your job is to:
 
 Analyze the text carefully and extract the core ideas.
 
@@ -44,17 +41,24 @@ Maintain the original meaning but improve the readability and flow for studying 
 
 Here’s the text for analysis:
 
-${concatenatedText}"
+${concatenatedText}"`
+    );
 
-`
-  );
-  return result.response.text();
+    return result.response.text();
+  } catch (error) {
+    console.error("Error in getData:", error);
+    throw new Error("Failed to summarize with Gemini.");
+  }
 }
 
 export async function youtubeSummarizer(inputText) {
-  const transcript = await YoutubeTranscript.fetchTranscript(inputText);
-  const concatenatedText = transcript.map((item) => item.text).join(" ");
-  //   const result = ApiResponse[0]
-  const result = await getData(concatenatedText);
-  return result;
+  try {
+    const transcript = await YoutubeTranscript.fetchTranscript(inputText);
+    const concatenatedText = transcript.map((item) => item.text).join(" ");
+    const result = await getData(concatenatedText);
+    return result;
+  } catch (error) {
+    console.error("Error in youtubeSummarizer:", error);
+    throw new Error("Failed to fetch transcript or summarize.");
+  }
 }
