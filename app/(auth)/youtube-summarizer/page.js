@@ -21,8 +21,18 @@ const YoutubeSummary = () => {
     if (!inputText.trim()) return;
     setLoading(true);
     try {
-      const result = await youtubeSummarizer(inputText);
-      setSummary(result);
+      const res = await fetch(
+        `/api/youtube-response?url=${encodeURIComponent(inputText)}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await res.json();
+      console.log(data.summary)
+      setSummary(data.summary);
     } catch (error) {
       console.error("Error fetching summary:", error);
       setSummary("Failed to fetch summary. Please try again.");
@@ -32,9 +42,9 @@ const YoutubeSummary = () => {
 
   return (
     <>
-     <div className="fixed top-0 left-0 w-full z-50 bg-black">
-    <WorkSpaceHeader />
-  </div>
+      <div className="fixed top-0 left-0 w-full z-50 bg-black">
+        <WorkSpaceHeader />
+      </div>
       <div className="relative min-h-screen w-full bg-black text-white px-5 py-12 flex flex-col items-center justify-start pt-32">
         {/* Gradient Backgrounds */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#4B0082,_transparent_50%)] z-0" />

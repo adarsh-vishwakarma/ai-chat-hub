@@ -31,7 +31,7 @@ const AiAssistant = () => {
       setIsTyping(true);
 
       // Simulate AI response (replace with real API call)
-      fetch(`/api/chatgpt-response?message=${encodeURIComponent(input.trim())}`)
+      fetch(`/api/chatgpt-response?message=${input.trim()}`)
         .then((res) => res.json())
         .then((data) => {
           console.log("AI Response:", data.reply); // <-- this line
