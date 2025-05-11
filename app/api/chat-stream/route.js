@@ -14,7 +14,7 @@ export async function POST(req) {
 
     const pc = new Pinecone({
       apiKey:
-        "pcsk_2Se4fD_FGp1tspjRK2JztiZSrNSsccxhp8kn4bNwKbeQaqbR2i6k2P1vvjbW8QzPysneLP",
+       process.env.PINECONE_API_KEY,
     });
     const indexName = "ai-chat";
 
@@ -44,7 +44,7 @@ export async function POST(req) {
     const splitterList = output.map((item) => item.pageContent);
 
     const genAi = new GoogleGenerativeAIEmbeddings({
-      apiKey: "AIzaSyD04N0MbHkFRfDX1wHgtHwtmBT0LW4efLs",
+      apiKey: process.env.GOOGLE_GENAI_API_KEY,
       model: "text-embedding-004", // 768 dimensions
       taskType: TaskType.RETRIEVAL_DOCUMENT,
       title: "Document title",
@@ -83,7 +83,7 @@ export async function POST(req) {
 
 
 async function chatAi(concatenatedText, query) {
-  const apiKey = "AIzaSyD04N0MbHkFRfDX1wHgtHwtmBT0LW4efLs";
+  const apiKey = process.env.GOOGLE_GENAI_API_KEY;
   const genAI = new GoogleGenerativeAI(apiKey);
 
   const model = genAI.getGenerativeModel({
@@ -122,14 +122,14 @@ export async function GET(req) {
 
      const pc = new Pinecone({
       apiKey:
-        "pcsk_2Se4fD_FGp1tspjRK2JztiZSrNSsccxhp8kn4bNwKbeQaqbR2i6k2P1vvjbW8QzPysneLP",
+        process.env.PINECONE_API_KEY,
     });
     const indexName = "ai-chat";
 
     const index = pc.index("ai-chat");
 
    const genAi = new GoogleGenerativeAIEmbeddings({
-      apiKey: "AIzaSyD04N0MbHkFRfDX1wHgtHwtmBT0LW4efLs",
+      apiKey: process.env.GOOGLE_GENAI_API_KEY,
       model: "text-embedding-004", // 768 dimensions
       taskType: TaskType.RETRIEVAL_DOCUMENT,
       title: "Document title",

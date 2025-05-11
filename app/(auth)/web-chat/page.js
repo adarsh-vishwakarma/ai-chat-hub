@@ -22,8 +22,8 @@ function InputPage() {
 
       if (res.ok) {
         const data = await res.json();
-        console.log("Server response:", data);
-        if (data.response) {
+        console.log("Server response:", data.success);
+        if (data.success) {
           router.push(`/web-chat/${data.url}`);
         }
       } else {
