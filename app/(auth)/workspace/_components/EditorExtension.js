@@ -62,7 +62,7 @@ const EditorExtension = ({ editor }) => {
   return (
     <div className="p-5">
       <div className="control-group">
-        <div className="button-group">
+        <div className="button-group flex gap-5">
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
             className={editor.isActive("bold") ? "text-blue-500" : ""}
@@ -115,7 +115,7 @@ const EditorExtension = ({ editor }) => {
           >
             <Heading2 />
           </button>
-          <button onClick={() => onAiClick()} className={"hover:text-blue-500"}>
+          <button onClick={() => onAiClick()} className={"hover:text-blue-500 hover:cursor-pointer"}>
             <Sparkles />
           </button>
         </div>

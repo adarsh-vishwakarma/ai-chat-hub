@@ -18,6 +18,8 @@ import {
   LineChart,
   Bot,
   Youtube,
+  Earth,
+  Code,
 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -42,12 +44,12 @@ const Sidebar = () => {
     <aside className="bg-black text-white h-screen w-64 p-6 flex flex-col justify-between border-r border-white/10">
       {/* Top Brand */}
       <div>
-        <div className="flex items-center mb-10">
+        <Link href={'/'} className="flex items-center mb-10">
           <Bot className="h-8 w-8 text-purple-500" />
           <span className="ml-2 text-xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
             AI Chat Hub
           </span>
-        </div>
+        </Link>
 
         <UploadPdfDialog
           isMaxFile={
@@ -71,8 +73,8 @@ const Sidebar = () => {
             </Link>
             <Link href="/dashboard/upgrade">
               <SidebarItem
-                icon={<Wallet size={18} />}
-                label="Wallet"
+                icon={<Shield size={18} />}
+                label="Upgrade"
                 active={path === "/dashboard/upgrade"}
               />
             </Link>
@@ -94,8 +96,14 @@ const Sidebar = () => {
 
             <SidebarItem icon={<Youtube size={18} />} label="YouTube Summarizer" active={path === "/youtube-summarizer"}/>
           </Link>
-            <SidebarItem icon={<Gift size={18} />} label="Rewards" />
-            <SidebarItem icon={<HelpCircle size={18} />} label="Support" />
+           <Link href={'/web-chat'}>
+
+            <SidebarItem icon={<Earth size={18} />} label="Chat with Website" active={path === "/web-chat"}/>
+          </Link>
+             <Link href={'/chat-gpt'}>
+
+            <SidebarItem icon={<Code size={18} />} label="ChatGPT" active={path === "/chat-gpt"}/>
+          </Link>
           </nav>
         </div>
       </div>

@@ -122,17 +122,18 @@ export default function Home() {
           </div>
 
           {/* Feature Preview */}
-          {/* <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
-            <div className="relative w-[80%] h-[500px] rounded-xl overflow-hidden">
-              <Image
+          <div className="flex justify-center">
+          <div className="relative flex items-center justify-center p-4 bg-gradient-to-br from-purple-500/10 to-black/10 rounded-2xl border-2 border-purple-500/30 shadow-lg w-[900px] h-[550px]">
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10 rounded-2xl"></div>
+            <div className="relative  rounded-2xl overflow-hidden border-2 border-purple-500/20 shadow-2xl w-full h-full">
+              <img
                 src="/dashboard.png"
                 alt="AI Interface"
-                fill
-                className="object-cover rounded-xl shadow-2xl border border-purple-500/20"
+                className="object-cover w-full h-full"
               />
             </div>
-          </div> */}
+          </div>
+          </div>
         </div>
       </section>
 

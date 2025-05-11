@@ -39,7 +39,7 @@ const Sidebar = () => {
 
 const SidebarItem = ({ icon, label, badge, active }) => (
   <div
-    className={`flex items-center justify-between px-3 py-2 rounded-md cursor-pointer 
+    className={`flex items-center justify-between  px-3 py-2 rounded-md cursor-pointer 
     ${active ? "bg-white/10 text-white" : "text-gray-400 hover:bg-white/5 hover:text-white"}`}
   >
     <div className="flex items-center gap-3">
