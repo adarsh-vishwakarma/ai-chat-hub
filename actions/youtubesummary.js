@@ -4,7 +4,7 @@ import { YoutubeTranscript } from "youtube-transcript";
 
 async function getData(concatenatedText) {
 
-  const apiKey = "AIzaSyD04N0MbHkFRfDX1wHgtHwtmBT0LW4efLs";
+const apiKey = process.env.GOOGLE_GENAI_API_KEY; 
   const genAI = new GoogleGenerativeAI(apiKey);
 
   const model = genAI.getGenerativeModel({
