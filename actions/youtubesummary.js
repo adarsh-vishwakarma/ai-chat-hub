@@ -27,21 +27,21 @@ async function getData(concatenatedText) {
     });
 
     const result = await chatSession.sendMessage(
-      `You are an AI assistant specialized in converting raw text or transcripts into clear, structured study notes. I will provide you with a block of text (such as a YouTube transcript or lecture notes). Your job is to:
+`You are an intelligent AI assistant trained to convert YouTube transcripts or lecture content into clear, concise, and informative summaries.
 
-Analyze the text carefully and extract the core ideas.
+Your task is to:
+- Carefully analyze the provided text.
+- Extract the main ideas and key takeaways.
+- Present the information as a well-structured paragraph that maintains the original meaning.
+- Ensure the output is easy to read, free from repetition or filler content, and suitable for study or quick revision.
 
-Organize the information under clear headings and subheadings.
+Avoid using bullet points or headings. Just summarize the content naturally in paragraph form.
 
-Use bullet points for important facts, examples, or steps.
+Here is the transcript for summarization:
 
-Remove any unnecessary filler words or repeated content.
+${concatenatedText}`
 
-Maintain the original meaning but improve the readability and flow for studying or quick revision.
 
-Here’s the text for analysis:
-
-${concatenatedText}"`
     );
 
     return result.response.text();

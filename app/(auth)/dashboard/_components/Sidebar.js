@@ -102,7 +102,7 @@ const Sidebar = () => {
           </Link>
              <Link href={'/chat-gpt'}>
 
-            <SidebarItem icon={<Code size={18} />} label="ChatGPT" active={path === "/chat-gpt"}/>
+            <SidebarItem icon={<Code size={18} />} label="AI Assistant" active={path === "/chat-gpt"}/>
           </Link>
           </nav>
         </div>

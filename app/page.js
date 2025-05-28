@@ -1,4 +1,6 @@
 "use client";
+import FeedbackFooter from "@/components/FeedbackFooter";
+import FeedbackSection from "@/components/FeedbackSection";
 import Navbar from "@/components/Navbar";
 import { buttonVariants } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
@@ -350,7 +352,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+<FeedbackSection />
       {/* Benefits Section */}
       <section className="py-20 relative">
         <div className="container mx-auto px-6">
@@ -439,42 +441,10 @@ export default function Home() {
         </div>
       </section>
       {/* Footer */}
-      <footer className="bg-black border-t border-white/10 py-12 mt-20">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center text-gray-400">
-            {/* Logo and Tagline */}
-            <div className="flex items-center mb-6 md:mb-0">
-              <Bot className="h-6 w-6 text-purple-500" />
-              <span className="ml-2 text-lg font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-                AI Chat Hub
-              </span>
-            </div>
-
-            {/* Footer Links */}
-            <div className="flex flex-wrap justify-center md:justify-end gap-6 text-sm">
-              <a href="#" className="hover:text-white transition-colors">
-                Features
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
-                Pricing
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
-                How It Works
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
-                Contact
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
-                Privacy
-              </a>
-            </div>
-          </div>
-
-          <div className="mt-8 text-center text-xs text-gray-500">
-            &copy; {new Date().getFullYear()} AI Chat Hub. All rights reserved.
-          </div>
-        </div>
-      </footer>
+     
+<FeedbackFooter />
+          
+        
     </div>
   );
 }

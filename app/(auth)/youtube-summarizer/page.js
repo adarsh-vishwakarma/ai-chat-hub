@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { Search } from "lucide-react";
+import React, { useRef, useState } from "react";
+import { Search, Square, Volume2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import WorkSpaceHeader from "../workspace/_components/WorkSpaceHeader";
 import { youtubeSummarizer } from "@/actions/youtubesummary";
@@ -9,6 +9,37 @@ const YoutubeSummary = () => {
   const [inputText, setInputText] = useState("");
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const utteranceRef = useRef(null);
+
+  const speakSummary = () => {
+    if (!summary) return;
+
+    const plainText = summary.replace(/[#*_~`>]/g, ''); // Strip markdown
+    const utterance = new SpeechSynthesisUtterance(plainText);
+
+    utterance.lang = 'en-US';
+    utterance.rate = 1;
+    utterance.pitch = 1;
+
+    // When speaking ends, reset state
+    utterance.onend = () => setIsSpeaking(false);
+
+    speechSynthesis.speak(utterance);
+    utteranceRef.current = utterance;
+    setIsSpeaking(true);
+  };
+
+  const stopSpeaking = () => {
+    speechSynthesis.cancel();
+    setIsSpeaking(false);
+  };
+
+  const handleClick = () => {
+    isSpeaking ? stopSpeaking() : speakSummary();
+  };
+
 
   // 🔍 Handle input and log it
   const handleInputChange = (e) => {
@@ -33,6 +64,7 @@ const YoutubeSummary = () => {
       const data = await res.json();
       console.log(data.summary)
       setSummary(data.summary);
+      
     } catch (error) {
       console.error("Error fetching summary:", error);
       setSummary("Failed to fetch summary. Please try again.");
@@ -56,7 +88,7 @@ const YoutubeSummary = () => {
             <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
               YouTube Video Summary
             </span>{" "}
-            with Gemini AI
+            with AI
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-300 text-center max-w-2xl">
@@ -89,7 +121,18 @@ const YoutubeSummary = () => {
           {/* Summary Output */}
           {summary && (
             <div className="mt-10 bg-white text-black rounded-xl p-6 max-w-3xl w-full shadow-lg">
-              <h2 className="text-2xl font-bold mb-4">Summary</h2>
+              <div className="text-2xl font-bold mb-4 flex items-center justify-between">
+                <h1>
+                  Summary
+                </h1>
+                 <button
+          onClick={handleClick}
+          title={isSpeaking ? 'Stop Speaking' : 'Speak Summary'}
+          className="text-gray-600 hover:text-blue-500 transition"
+        >
+          {isSpeaking ? <Square /> : <Volume2 />}
+        </button>
+              </div>
               <ReactMarkdown>{summary}</ReactMarkdown>
             </div>
           )}

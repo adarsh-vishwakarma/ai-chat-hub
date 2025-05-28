@@ -104,7 +104,14 @@ async function chatAi(concatenatedText, query) {
   });
 
   const result = await chatSession.sendMessage(
-    `For question: ${query} and with the given content as answer, please give appropriate answer in text format. The answer content is ${concatenatedText}`
+     `{
+        "role": "system",
+        "content": "Use the following pieces of context (or previous conversation if needed) to answer the user's question in markdown format."
+      },
+      {
+        "role": "user",
+        "content": "For question: " + ${query} + " and with the given content as answer, please give an appropriate answer in text format. The answer content is " + ${concatenatedText} + ". \nIf you don't know the answer, just say that you don't know, don't try to make up an answer.\n----------------\n"
+      }`
   );
 
   return result.response.text();
